@@ -4,19 +4,41 @@
 # https://aka.ms/yaml
 
 variables:
-  pipeline-var: 'pipeline yml value'
+  PIPELINE_VAR: 'pipeline yml value'
 
 trigger:
 - master
 
 pool:
   vmImage: 'ubuntu-latest'
+   
+stages:
+  - stage: Build
+    displayName: Build
+    variables: 
+      - name: STAGE_VAR
+        value: "stage yaml value"
+    jobs:
+      - job: terraform
+        displayName: Publish Terraform
+        condition: true
+        continueOnError: false
+        pool:
+          vmImage: "Ubuntu-16.04"
+        variables:
+          - name: JOB_VAR
+            value: "job yaml value"
+        steps:                     
+          - bash: echo $(MY_VAR) $(STAGE_VAR) $(JOB_VAR)                  
+      - job: BuildJob
+        steps:
+          - script: echo Building!            
 
-steps:
-- script: echo Hello, world! $(pipeline-var)
-  displayName: 'Run a one-line script'
+          - script: echo Hello, world!
+            displayName: 'Run a one-line script'                
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+          - script: |
+              echo Add other tasks to build, test, and deploy your project.
+              echo See https://aka.ms/yaml
+            displayName: 'Run a multi-line script'
+
