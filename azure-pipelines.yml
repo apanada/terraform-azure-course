@@ -32,7 +32,7 @@ stages:
           - bash: echo $(MY_VAR) $(STAGE_VAR) $(JOB_VAR)                  
       - job: BuildJob
         steps:
-          - script: echo Building!            
+          - script: echo Building! $(ClientId)  
 
           - script: echo Hello, world!
             displayName: 'Run a one-line script'                
