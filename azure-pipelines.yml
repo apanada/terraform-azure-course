@@ -31,6 +31,8 @@ stages:
         steps:                     
           - bash: echo $(MY_VAR) $(STAGE_VAR) $(JOB_VAR)                  
       - job: BuildJob
+        variables:
+          - group: "Website Configuration"
         steps:
           - script: echo Building! $(ClientId)  
 
